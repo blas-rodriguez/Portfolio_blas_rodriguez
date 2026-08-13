@@ -80,17 +80,14 @@ La foto del hero está en `src/assets/blas-rodriguez.png`. La copia usada para O
 
 ## Reemplazar los CV
 
-El CV provisional en español está en:
+Los CV publicados están en:
 
 ```text
+public/cv/blas-rodriguez-cv-en.pdf
 public/cv/blas-rodriguez-cv-es.pdf
 ```
 
-Cuando esté disponible la versión inglesa:
-
-1. Copiarla como `public/cv/blas-rodriguez-cv-en.pdf`.
-2. En `src/data/profile.ts`, cambiar `cv.en` a `/cv/blas-rodriguez-cv-en.pdf`.
-3. Cambiar `cvIsSpanishOnly` a `false`.
+Para actualizarlos, reemplazar los PDFs conservando esos nombres. La página inglesa descarga el archivo `en` y la española descarga el archivo `es`.
 
 ## Agregar videos
 
