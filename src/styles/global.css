@@ -234,6 +234,19 @@ h3 {
   background: var(--accent-soft);
 }
 
+.button--whatsapp {
+  border-color: color-mix(in srgb, var(--green) 42%, transparent);
+}
+
+.button--whatsapp .icon {
+  color: var(--green);
+}
+
+.button--whatsapp:hover {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 10%, transparent);
+}
+
 .button--small {
   min-height: 39px;
   padding-inline: 15px;

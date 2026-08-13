@@ -30,6 +30,14 @@ const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
       <div class="hero-actions reveal reveal--delay-2">
         <a class="button" href="#projects">{t(copy.common.viewWork)}<Icon name="arrow" size={18} /></a>
         <a class="button button--secondary" href={`mailto:${profile.email}`}>{t(copy.common.contactMe)}</a>
+        <a
+          class="button button--secondary button--whatsapp"
+          href={profile.whatsapp}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Icon name="whatsapp" size={18} />WhatsApp
+        </a>
       </div>
 
       <div class="hero-social reveal reveal--delay-3">
