@@ -1,0 +1,33 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  type: Project['visual'];
+  compact?: boolean;
+}
+
+const { type, compact = false } = Astro.props;
+---
+
+<div
+  class:list={['project-visual', `project-visual--${type}`, compact && 'project-visual--compact']}
+  aria-hidden="true"
+>
+  <div class="visual-window">
+    <div class="visual-topbar">
+      <i></i><i></i><i></i>
+      <span></span>
+    </div>
+    <div class="visual-body">
+      <div class="visual-sidebar">
+        <b></b><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="visual-content">
+        <div class="visual-title"><b></b><span></span></div>
+        <div class="visual-metrics"><i></i><i></i><i></i></div>
+        <div class="visual-chart"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="visual-rows"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+</div>

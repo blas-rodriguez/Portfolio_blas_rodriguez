@@ -1,0 +1,62 @@
+---
+import Icon from './Icon.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import SectionHeading from './SectionHeading.astro';
+import VideoEmbed from './VideoEmbed.astro';
+import { copy } from '../data/profile';
+import { demos } from '../data/projects';
+import { translate, type Locale } from '../data/types';
+import { introVideos } from '../data/videos';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+---
+
+<section class="section videos-section" id="videos">
+  <div class="container">
+    <SectionHeading
+      eyebrow={t(copy.videos.eyebrow)}
+      title={t(copy.videos.title)}
+      intro={t(copy.videos.intro)}
+    />
+    <div class="videos-grid">
+      {
+        introVideos.map((video) => (
+          <VideoEmbed video={video} locale={locale} comingSoon={t(copy.common.comingSoon)} />
+        ))
+      }
+    </div>
+    <div class="walkthrough-row">
+      <span><Icon name="code" size={18} /></span>
+      <p>{t(copy.videos.walkthroughs)}</p>
+      <strong>{t(copy.common.comingSoon)}</strong>
+    </div>
+  </div>
+</section>
+
+<section class="section demos-section" id="demos">
+  <div class="container">
+    <SectionHeading eyebrow={t(copy.demos.eyebrow)} title={t(copy.demos.title)} intro={t(copy.demos.intro)} />
+    <div class="demos-grid">
+      {
+        demos.map((demo, index) => (
+          <article class="demo-card">
+            <ProjectVisual type={demo.visual} compact />
+            <div>
+              <>
+                <span>
+                  0{index + 1} / {demo.type}
+                </span>
+                <h3>{demo.title[locale]}</h3>
+              </>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

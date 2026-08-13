@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+import { copy, profile } from '../data/profile';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+---
+
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-brand">
+      <span class="brand-mark">BR</span><div>
+        <strong>{profile.name}</strong><p>{t(copy.footer.role)} · Argentina</p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href={profile.github} target="_blank" rel="noreferrer"><Icon name="github" size={17} />GitHub</a>
+      <a href={profile.linkedin} target="_blank" rel="noreferrer"
+        ><Icon name="linkedin" size={17} />LinkedIn</a
+      >
+      <a href={`mailto:${profile.email}`}><Icon name="mail" size={17} />Email</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>{t(copy.footer.built)}</p><p>© {new Date().getFullYear()} {profile.name}</p>
+  </div>
+</footer>

@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { copy, stats } from '../data/profile';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+---
+
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="about-layout">
+      <SectionHeading eyebrow={t(copy.about.eyebrow)} title={t(copy.about.title)} />
+      <div class="about-copy">
+        <p class="lead-copy">{t(copy.about.intro)}</p>
+        <p>{t(copy.about.body)}</p>
+        <p>{t(copy.about.ai)}</p>
+        <div class="about-signature">
+          <Icon name="code" size={21} /><span>Business thinking × Software engineering</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      {
+        stats.map((stat, index) => (
+          <article class="stat-card">
+            <span class="stat-index">0{index + 1}</span>
+            <strong>{stat.value}</strong>
+            <p>{t(stat.label)}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

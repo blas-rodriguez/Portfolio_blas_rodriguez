@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+import { copy, profile } from '../data/profile';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const cvPath = `${base}${profile.cv[locale].replace(/^\//, '')}`;
+---
+
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="contact-card">
+      <div class="contact-grid" aria-hidden="true"></div>
+      <div class="contact-copy">
+        <div class="status-pill status-pill--light">
+          <span class="status-dot"></span>{t(copy.contact.availability)}
+        </div>
+        <p class="eyebrow"><span></span>{t(copy.contact.eyebrow)}</p>
+        <h2>{t(copy.contact.title)}</h2>
+        <p>{t(copy.contact.body)}</p>
+        <div class="contact-actions">
+          <a class="button" href={`mailto:${profile.email}`}
+            ><Icon name="mail" size={18} />{t(copy.contact.email)}</a
+          >
+          <a class="button button--secondary" href={cvPath} download
+            ><Icon name="download" size={18} />{
+              profile.cvIsSpanishOnly && locale === 'en'
+                ? t(copy.common.spanishCv)
+                : t(copy.common.downloadCv)
+            }</a
+          >
+        </div>
+      </div>
+      <div class="contact-links">
+        <a href={`mailto:${profile.email}`}
+          ><span><Icon name="mail" /></span><div>
+            <small>Email</small><strong>{profile.email}</strong>
+          </div><Icon name="arrow" /></a
+        >
+        <a href={profile.linkedin} target="_blank" rel="noreferrer"
+          ><span><Icon name="linkedin" /></span><div>
+            <small>LinkedIn</small><strong>/in/blas-rodriguez</strong>
+          </div><Icon name="arrow" /></a
+        >
+        <a href={profile.github} target="_blank" rel="noreferrer"
+          ><span><Icon name="github" /></span><div>
+            <small>GitHub</small><strong>@blas-rodriguez</strong>
+          </div><Icon name="arrow" /></a
+        >
+      </div>
+    </div>
+  </div>
+</section>

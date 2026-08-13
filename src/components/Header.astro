@@ -1,0 +1,138 @@
+---
+import Icon from './Icon.astro';
+import { copy, profile } from '../data/profile';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const pageRoot = locale === 'en' ? base : `${base}es/`;
+const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
+const links = [
+  ['about', copy.nav.about],
+  ['projects', copy.nav.projects],
+  ['experience', copy.nav.experience],
+  ['skills', copy.nav.skills],
+  ['automation', copy.nav.automation],
+  ['videos', copy.nav.videos],
+  ['contact', copy.nav.contact],
+] as const;
+---
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href={pageRoot}>
+      <span class="brand-mark">BR</span>
+      <span class="brand-name">Blas Rodriguez</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label={locale === 'en' ? 'Main navigation' : 'Navegación principal'}>
+      {links.map(([id, label]) => <a href={`${pageRoot}#${id}`}>{t(label)}</a>)}
+    </nav>
+
+    <div class="header-actions">
+      <div class="language-switch" aria-label={locale === 'en' ? 'Select language' : 'Seleccionar idioma'}>
+        <a
+          class:list={{ active: locale === 'en' }}
+          href={base}
+          lang="en"
+          aria-current={locale === 'en' ? 'page' : undefined}>EN</a
+        >
+        <span>/</span>
+        <a
+          class:list={{ active: locale === 'es' }}
+          href={`${base}es/`}
+          lang="es"
+          aria-current={locale === 'es' ? 'page' : undefined}>ES</a
+        >
+      </div>
+      <button
+        class="icon-button theme-toggle"
+        type="button"
+        aria-label={t(copy.common.theme)}
+        data-theme-toggle
+      >
+        <span class="theme-icon theme-icon--moon"><Icon name="moon" size={18} /></span>
+        <span class="theme-icon theme-icon--sun"><Icon name="sun" size={18} /></span>
+      </button>
+      <a class="button button--small header-cv" href={asset(profile.cv[locale])} download>
+        <Icon name="download" size={16} />
+        {profile.cvIsSpanishOnly && locale === 'en' ? t(copy.common.spanishCv) : t(copy.common.downloadCv)}
+      </a>
+      <button
+        class="icon-button menu-toggle"
+        type="button"
+        aria-label={t(copy.common.menu)}
+        aria-expanded="false"
+        data-menu-toggle
+      >
+        <span data-menu-open><Icon name="menu" /></span>
+        <span data-menu-close hidden><Icon name="close" /></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-panel" data-mobile-menu hidden>
+    <nav aria-label={locale === 'en' ? 'Mobile navigation' : 'Navegación móvil'}>
+      {
+        links.map(([id, label], index) => (
+          <a href={`${pageRoot}#${id}`}>
+            <span>0{index + 1}</span>
+            {t(label)}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="button" href={asset(profile.cv[locale])} download>
+      <Icon name="download" size={17} />
+      {profile.cvIsSpanishOnly && locale === 'en' ? t(copy.common.spanishCv) : t(copy.common.downloadCv)}
+    </a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  const openIcon = document.querySelector<HTMLElement>('[data-menu-open]');
+  const closeIcon = document.querySelector<HTMLElement>('[data-menu-close]');
+  const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  const closeMenu = () => {
+    if (!menu || !menuButton || !openIcon || !closeIcon) return;
+    menu.hidden = true;
+    menuButton.setAttribute('aria-expanded', 'false');
+    openIcon.hidden = false;
+    closeIcon.hidden = true;
+    document.body.classList.remove('menu-open');
+  };
+
+  menuButton?.addEventListener('click', () => {
+    if (!menu || !openIcon || !closeIcon) return;
+    const willOpen = menu.hidden === true;
+    menu.hidden = !willOpen;
+    menuButton.setAttribute('aria-expanded', String(willOpen));
+    openIcon.hidden = willOpen;
+    closeIcon.hidden = !willOpen;
+    document.body.classList.toggle('menu-open', willOpen);
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  themeButton?.addEventListener('click', () => {
+    const current = document.documentElement.dataset.theme;
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+
+  const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 16);
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+</script>

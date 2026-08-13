@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { aiTools, aiWorkflow, integrations } from '../data/integrations';
+import { copy } from '../data/profile';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+const workflowLabels: Record<string, Record<Locale, string>> = {
+  Architecture: { en: 'Architecture', es: 'Arquitectura' },
+  Development: { en: 'Development', es: 'Desarrollo' },
+  Debugging: { en: 'Debugging', es: 'Depuración' },
+  Testing: { en: 'Testing', es: 'Testing' },
+  Refactoring: { en: 'Refactoring', es: 'Refactorización' },
+  Documentation: { en: 'Documentation', es: 'Documentación' },
+};
+---
+
+<section class="section automation-section" id="automation">
+  <div class="container">
+    <div class="integrations-layout">
+      <div>
+        <SectionHeading
+          eyebrow={t(copy.integrations.eyebrow)}
+          title={t(copy.integrations.title)}
+          intro={t(copy.integrations.body)}
+        />
+        <article class="social-automation">
+          <span class="social-icon"><Icon name="arrow" /></span>
+          <div>
+            <h3>{t(copy.integrations.socialTitle)}</h3>
+            <p>{t(copy.integrations.socialBody)}</p>
+          </div>
+        </article>
+      </div>
+      <div class="integration-cloud">
+        {
+          integrations.map((integration, index) => (
+            <div class:list={['integration-pill', index % 4 === 0 && 'integration-pill--accent']}>
+              <span>{integration.slice(0, 2).toUpperCase()}</span>
+              {integration}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <article class="ai-card">
+      <div class="ai-orbit" aria-hidden="true"><span>AI</span><i></i><i></i><i></i></div>
+      <div class="ai-copy">
+        <p class="eyebrow"><span></span>{t(copy.ai.eyebrow)}</p>
+        <h2>{t(copy.ai.title)}</h2>
+        <p>{t(copy.ai.body)}</p>
+        <div class="tag-list">{aiTools.map((tool) => <span>{tool}</span>)}</div>
+      </div>
+      <ol class="ai-workflow">
+        {
+          aiWorkflow.map((step, index) => (
+            <li>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{workflowLabels[step]?.[locale] ?? step}</strong>
+              {index < aiWorkflow.length - 1 && <Icon name="arrow" size={16} />}
+            </li>
+          ))
+        }
+      </ol>
+    </article>
+  </div>
+</section>

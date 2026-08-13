@@ -1,0 +1,62 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { copy } from '../data/profile';
+import { infrastructure, mobile, skillGroups } from '../data/skills';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+---
+
+<section class="section expertise-section" id="skills">
+  <div class="container">
+    <SectionHeading eyebrow={t(copy.expertise.eyebrow)} title={t(copy.expertise.title)} />
+
+    <div class="skills-grid">
+      {
+        skillGroups.map((group, index) => (
+          <article class="skill-card">
+            <div class="skill-card-head">
+              <>
+                <span>0{index + 1}</span>
+                <Icon name="code" size={19} />
+              </>
+            </div>
+            <h3>{t(group.title)}</h3>
+            <div class="skill-list">
+              {group.skills.map((skill) => (
+                <span>{skill}</span>
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="capabilities-grid">
+      <article class="capability-card capability-card--mobile">
+        <div class="capability-icon" aria-hidden="true"><span></span></div>
+        <div>
+          <p class="eyebrow"><span></span>MOBILE</p>
+          <h3>{t(copy.expertise.mobileTitle)}</h3>
+          <p>{t(copy.expertise.mobileBody)}</p>
+          <div class="tag-list tag-list--small">{mobile.map((item) => <span>{item}</span>)}</div>
+        </div>
+      </article>
+      <article class="capability-card capability-card--infra">
+        <div class="capability-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div>
+          <p class="eyebrow"><span></span>DEVOPS</p>
+          <h3>{t(copy.expertise.infraTitle)}</h3>
+          <p>{t(copy.expertise.infraBody)}</p>
+          <div class="tag-list tag-list--small">{infrastructure.map((item) => <span>{item}</span>)}</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

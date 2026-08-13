@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import type { Video } from '../data/videos';
+import type { Locale } from '../data/types';
+
+interface Props {
+  video: Video;
+  locale: Locale;
+  comingSoon: string;
+}
+
+const { video, locale, comingSoon } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const title = video.title[locale];
+const mp4Source = video.source ? `${base}${video.source.replace(/^\//, '')}` : undefined;
+---
+
+<article class="video-card">
+  {
+    video.type === 'youtube' && video.source ? (
+      <div class="video-frame">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${video.source}`}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        />
+      </div>
+    ) : video.type === 'vimeo' && video.source ? (
+      <div class="video-frame">
+        <iframe
+          src={`https://player.vimeo.com/video/${video.source}`}
+          title={title}
+          loading="lazy"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        />
+      </div>
+    ) : video.type === 'mp4' && mp4Source ? (
+      <div class="video-frame">
+        <video controls preload="metadata" playsinline aria-label={title}>
+          <source src={mp4Source} type="video/mp4" />
+        </video>
+      </div>
+    ) : (
+      <div class="video-placeholder">
+        <span class="video-language">{video.language}</span>
+        <div class="play-button">
+          <Icon name="play" size={24} />
+        </div>
+        <div class="video-lines" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </div>
+      </div>
+    )
+  }
+  <div class="video-caption">
+    <div>
+      <h3>{title}</h3>
+      <p>{video.type === 'placeholder' ? comingSoon : video.type.toUpperCase()}</p>
+    </div>
+    <span>{video.type === 'placeholder' ? '00:00' : video.language}</span>
+  </div>
+</article>

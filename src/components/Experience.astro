@@ -1,0 +1,78 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { experiences } from '../data/experience';
+import { copy } from '../data/profile';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+const localizePeriod = (period: string) =>
+  locale === 'es' ? period.replace('Present', 'Actualidad') : period;
+---
+
+<section class="section experience-section" id="experience">
+  <div class="container">
+    <SectionHeading
+      eyebrow={t(copy.experience.eyebrow)}
+      title={t(copy.experience.title)}
+      intro={t(copy.experience.intro)}
+    />
+
+    <div class="timeline">
+      {
+        experiences.map((item, index) => (
+          <article class:list={['timeline-item', item.featured && 'timeline-item--featured']}>
+            <div class="timeline-marker">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+            </div>
+            <div class="timeline-meta">
+              <p>{localizePeriod(item.period)}</p>
+              {item.featured && (
+                <span class="feature-label">{locale === 'en' ? 'Leadership' : 'Liderazgo'}</span>
+              )}
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">
+                <div>
+                  <h3>{item.role[locale]}</h3>
+                  <p class="company">{item.company}</p>
+                </div>
+                {item.website && (
+                  <a
+                    href={item.website}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${item.company} website`}
+                  >
+                    <Icon name="external" />
+                  </a>
+                )}
+              </div>
+              <p>{item.description[locale]}</p>
+              {item.highlights && (
+                <ul class="highlight-list">
+                  {item.highlights.map((highlight) => (
+                    <li>
+                      <Icon name="check" size={16} />
+                      {highlight[locale]}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div class="tag-list tag-list--small">
+                {item.technologies.map((technology) => (
+                  <span>{technology}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

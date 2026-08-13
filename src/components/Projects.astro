@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import SectionHeading from './SectionHeading.astro';
+import { copy } from '../data/profile';
+import { projects } from '../data/projects';
+import { translate, type Locale } from '../data/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
+---
+
+<section class="section projects-section" id="projects">
+  <div class="container">
+    <SectionHeading
+      eyebrow={t(copy.projects.eyebrow)}
+      title={t(copy.projects.title)}
+      intro={t(copy.projects.intro)}
+    />
+
+    <div class="projects-grid">
+      {
+        projects.map((project, index) => (
+          <article class:list={['project-card', project.featured && 'project-card--featured']}>
+            <ProjectVisual type={project.visual} />
+            <div class="project-content">
+              <div class="project-number">PROJECT / {String(index + 1).padStart(2, '0')}</div>
+              <h3>{project.title}</h3>
+              <p class="project-subtitle">{t(project.subtitle)}</p>
+              <p>{t(project.description)}</p>
+              <div class="tag-list">
+                {project.stack.map((technology) => (
+                  <span>{technology}</span>
+                ))}
+              </div>
+              {project.url && (
+                <a class="text-link" href={project.url} target="_blank" rel="noreferrer">
+                  {t(copy.common.liveProject)} <Icon name="external" size={17} />
+                </a>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

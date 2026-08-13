@@ -1,0 +1,9 @@
+---
+import PortfolioPage from '../components/PortfolioPage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { seo } from '../data/profile';
+---
+
+<BaseLayout locale="en" title={seo.title.en} description={seo.description.en}>
+  <PortfolioPage locale="en" />
+</BaseLayout>
