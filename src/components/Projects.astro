@@ -26,7 +26,26 @@ const t = (value: Parameters<typeof translate>[0]) => translate(value, locale);
       {
         projects.map((project, index) => (
           <article class:list={['project-card', project.featured && 'project-card--featured']}>
-            <ProjectVisual type={project.visual} />
+            {project.videos ? (
+              <div class="project-video-grid">
+                {project.videos.map((video, videoIndex) => (
+                  <div class="project-video">
+                    <video
+                      controls
+                      preload="metadata"
+                      playsinline
+                      poster={video.poster}
+                      aria-label={video.title[locale]}
+                    >
+                      <source src={video.source} type="video/mp4" />
+                    </video>
+                    <span>Demo {videoIndex + 1}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ProjectVisual type={project.visual} />
+            )}
             <div class="project-content">
               <div class="project-number">PROJECT / {String(index + 1).padStart(2, '0')}</div>
               <h3>{project.title}</h3>

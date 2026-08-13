@@ -72,6 +72,8 @@ Con GitHub Actions no es necesario agregar manualmente un archivo `CNAME`; GitHu
 
 Todos los textos públicos importantes tienen versiones `en` y `es`.
 
+Los videos de demostración de Retail Price Checkers se encuentran en `src/assets/Retail_Price_Checkers/` y se vinculan desde `src/data/projects.ts`.
+
 ## Reemplazar la foto
 
 La foto del hero está en `src/assets/blas-rodriguez.png`. La copia usada para Open Graph y compartir la página está en `public/images/blas-rodriguez.png`. Conviene reemplazar ambas. Astro optimiza automáticamente la imagen del hero durante el build.

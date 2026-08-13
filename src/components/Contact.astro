@@ -27,7 +27,10 @@ const cvPath = `${base}${profile.cv[locale].replace(/^\//, '')}`;
         <h2>{t(copy.contact.title)}</h2>
         <p>{t(copy.contact.body)}</p>
         <div class="contact-actions">
-          <a class="button" href={`mailto:${profile.email}`}
+          <a class="button" href={profile.whatsapp} target="_blank" rel="noreferrer"
+            ><Icon name="whatsapp" size={19} />{t(copy.contact.whatsapp)}</a
+          >
+          <a class="button button--secondary" href={`mailto:${profile.email}`}
             ><Icon name="mail" size={18} />{t(copy.contact.email)}</a
           >
           <a class="button button--secondary" href={cvPath} download
@@ -40,6 +43,11 @@ const cvPath = `${base}${profile.cv[locale].replace(/^\//, '')}`;
         </div>
       </div>
       <div class="contact-links">
+        <a href={profile.whatsapp} target="_blank" rel="noreferrer"
+          ><span><Icon name="whatsapp" /></span><div>
+            <small>WhatsApp</small><strong>+54 9 380 456-4857</strong>
+          </div><Icon name="arrow" /></a
+        >
         <a href={`mailto:${profile.email}`}
           ><span><Icon name="mail" /></span><div>
             <small>Email</small><strong>{profile.email}</strong>

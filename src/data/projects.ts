@@ -1,4 +1,14 @@
 import type { LocalizedText } from './types';
+import retailPriceCheckerOne from '../assets/Retail_Price_Checkers/WhatsApp Video 2026-08-13 at 19.31.16.mp4';
+import retailPriceCheckerTwo from '../assets/Retail_Price_Checkers/WhatsApp Video 2026-08-13 at 19.31.17.mp4';
+import retailPriceCheckerPosterOne from '../assets/Retail_Price_Checkers/retail-price-checker-1-poster.webp';
+import retailPriceCheckerPosterTwo from '../assets/Retail_Price_Checkers/retail-price-checker-2-poster.webp';
+
+export interface ProjectVideo {
+  source: string;
+  poster: string;
+  title: LocalizedText;
+}
 
 export interface Project {
   title: string;
@@ -8,6 +18,7 @@ export interface Project {
   url?: string;
   visual: 'commerce' | 'pos' | 'data' | 'calendar' | 'retail' | 'education';
   featured?: boolean;
+  videos?: ProjectVideo[];
 }
 
 export const projects: Project[] = [
@@ -49,6 +60,7 @@ export const projects: Project[] = [
       es: 'Sistema web de gestión para ventas, inventario, caja, clientes, empleados, analítica, sucursales y representantes comerciales.',
     },
     stack: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'POS'],
+    url: 'https://compucomercio.com/',
     visual: 'data',
   },
   {
@@ -59,6 +71,7 @@ export const projects: Project[] = [
       es: 'Gestión de turnos y servicios para salones y comercios, incluyendo equipos, horarios, disponibilidad y clientes.',
     },
     stack: ['Laravel', 'PHP', 'MySQL', 'WhatsApp'],
+    url: 'https://sannicolasprestaciones.com.ar/turnos',
     visual: 'calendar',
   },
   {
@@ -70,6 +83,18 @@ export const projects: Project[] = [
     },
     stack: ['Web', 'Mobile', 'APIs', 'Retail'],
     visual: 'retail',
+    videos: [
+      {
+        source: retailPriceCheckerOne,
+        poster: retailPriceCheckerPosterOne.src,
+        title: { en: 'Retail price checker — demonstration 1', es: 'Consultor de precios — demostración 1' },
+      },
+      {
+        source: retailPriceCheckerTwo,
+        poster: retailPriceCheckerPosterTwo.src,
+        title: { en: 'Retail price checker — demonstration 2', es: 'Consultor de precios — demostración 2' },
+      },
+    ],
   },
   {
     title: 'Educational Gaming Platform',

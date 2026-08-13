@@ -7,6 +7,7 @@ export const profile = {
   location: 'Argentina',
   github: 'https://github.com/blas-rodriguez',
   linkedin: 'https://www.linkedin.com/in/blas-rodriguez-bab243227/',
+  whatsapp: 'https://wa.me/5493804564857',
   cv: {
     // The English CV will use /cv/blas-rodriguez-cv-en.pdf when it is available.
     en: '/cv/blas-rodriguez-cv-es.pdf',
@@ -170,6 +171,7 @@ export const copy = {
       es: 'Estoy disponible para oportunidades remotas de desarrollo, proyectos SaaS y colaboraciones de largo plazo.',
     },
     email: { en: 'Email me', es: 'Escribime' },
+    whatsapp: { en: 'Message me on WhatsApp', es: 'Contactame por WhatsApp' },
     availability: { en: 'Currently open to conversations', es: 'Disponible para conversar' },
   },
   footer: {
