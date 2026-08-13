@@ -34,11 +34,7 @@ const cvPath = `${base}${profile.cv[locale].replace(/^\//, '')}`;
             ><Icon name="mail" size={18} />{t(copy.contact.email)}</a
           >
           <a class="button button--secondary" href={cvPath} download
-            ><Icon name="download" size={18} />{
-              profile.cvIsSpanishOnly && locale === 'en'
-                ? t(copy.common.spanishCv)
-                : t(copy.common.downloadCv)
-            }</a
+            ><Icon name="download" size={18} />{t(copy.common.downloadCv)}</a
           >
         </div>
       </div>

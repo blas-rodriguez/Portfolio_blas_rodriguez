@@ -9,11 +9,9 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/blas-rodriguez-bab243227/',
   whatsapp: 'https://wa.me/5493804564857',
   cv: {
-    // The English CV will use /cv/blas-rodriguez-cv-en.pdf when it is available.
-    en: '/cv/blas-rodriguez-cv-es.pdf',
+    en: '/cv/blas-rodriguez-cv-en.pdf',
     es: '/cv/blas-rodriguez-cv-es.pdf',
   } satisfies Record<Locale, string>,
-  cvIsSpanishOnly: true,
 };
 
 export const seo = {
@@ -40,7 +38,6 @@ export const copy = {
   },
   common: {
     downloadCv: { en: 'Download CV', es: 'Descargar CV' },
-    spanishCv: { en: 'Spanish CV', es: 'CV en español' },
     viewWork: { en: 'View my work', es: 'Ver mi trabajo' },
     contactMe: { en: 'Contact me', es: 'Contactame' },
     liveProject: { en: 'Live project', es: 'Ver proyecto' },
