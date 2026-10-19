@@ -7,9 +7,9 @@
     "node": ">=22.19.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "node api.js && astro dev",
+    "start": "node api.js && astro dev",
+    "build": "node api.js && astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
     "lint": "eslint .",
